@@ -1,4 +1,4 @@
-# DSA-Python
+
 # 📚 Data Structures in Python
 
 This repository contains simple implementations of fundamental **Data Structures** in Python:  
