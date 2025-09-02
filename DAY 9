@@ -1,0 +1,299 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        mapping = {")": "(", "}": "{", "]": "["}
+
+        for char in s:
+            if char in mapping:
+                top_element = stack.pop() if stack else '#'
+                if mapping[char] != top_element:
+                    return False
+            else:
+                stack.append(char)
+        return not stack
+
+
+solver = Solution()
+s1 = "()"
+print(f"Input: s = \"{s1}\"")
+print(f"Output: {solver.isValid(s1)}")
+
+s2 = "()[]{}"
+print(f"Input: s = \"{s2}\"")
+print(f"Output: {solver.isValid(s2)}")
+
+s3 = "(]"
+print(f"Input: s = \"{s3}\"")
+print(f"Output: {solver.isValid(s3)}")
+
+s4 = "([)]"
+print(f"Input: s = \"{s4}\"")
+print(f"Output: {solver.isValid(s4)}")
+
+s5 = "{[]}"
+print(f"Input: s = \"{s5}\"")
+print(f"Output: {solver.isValid(s5)}")
+
+#BINARY TREE
+class Node:
+  def __init__(self,data):
+    self.data=data
+    self.left=None
+    self.right=None
+
+Index = -1
+
+def buildTree(arr):
+  global Index
+  Index += 1
+  if Index >= len(arr) or arr[Index] == -1:
+   return None
+
+  root = Node(arr[Index])
+  root.left = buildTree(arr)
+  root.right = buildTree(arr)
+  return root
+
+def preorder(root):#root -->left-->right
+  if root != None:
+    print(root.data,end=" ")
+    preorder(root.left)
+    preorder(root.right)
+
+def inorder(root):#left-->root-->right
+  if root != None:
+    inorder(root.left)
+    print(root.data,end=" ")
+    inorder(root.right)
+
+def postorder(root):
+  if root != None:
+    postorder(root.left)
+    postorder(root.right)
+    print(root.data,end=" ")
+
+root=buildTree([1,2,-1,-1,3,4,-1,5,-1,-1])
+print(inorder(root))
+print(preorder(root))
+print(postorder(root))
+
+def height(root):
+  if root is None:
+    return 0
+  left_height=height(root.left)
+  right_height=height(root.right)
+  return 1 + max(left_height,right_height)
+
+def count_nodes(root):
+  if root is None:
+    return 0
+  left_count=count_nodes(root.left)
+  right_count=count_nodes(root.right)
+  return 1 + left_count + right_count
+
+print(count_nodes(root))
+print(height(root))
+
+#bfsorlevel order
+from collections import deque
+def bfs(root,level):
+  if not root:
+    return
+
+  if level == 1:
+    print(root.data,end=" ")
+  elif level > 1:
+    bfs(root.left,level-1)
+    bfs(root.right,level-1)
+
+def main_function():
+  height_of_tree=height(root)
+
+  total_level=height_of_tree +1
+
+  for level in range(1,height_of_tree+1):
+    bfs(root,level)
+    print()
+
+main_function()
+
+
+def search(root,target):
+  if root is None:
+    return 0
+  if root.data==target:
+    return True
+  left_search=search(root.left,target)
+  right_search=search(root.right,target)
+
+
+from collections import Counter
+
+class Node:
+  def __init__(self,data):
+    self.data=data
+    self.left=None
+    self.right=None
+
+def klarge(root, k):
+  counter=[0]
+  result=[None]
+
+def reverse_inorder(root):
+  if not root or result[0] is not None:
+    return
+  reverse_inorder(root.right)
+
+  counter[0] += 1
+  if counter[0] == k:
+    result[0] = root.data
+    return
+
+  reverse_inorder(root.left)
+  counter[0] += 1
+
+ #import heapq
+# from collections import deque
+# import heapq # Moved import here
+
+# heap=[]
+# arr=[2,4,6,0,45,76,87,5]
+
+
+# #min heap
+# heapq.heappush(heap,5)
+# heapq.heappush(heap,2)
+# heapq.heappush(heap,10)
+# heapq.heappush(heap,1)
+
+# heapq.heapify(arr)
+# print(arr)
+# #heapq.heappop(heap)
+# #print(heap)
+
+# #max heap
+# max_heap=[]
+
+# heapq.heappush(max_heap,-5)
+# heapq.heappush(max_heap,-2)
+# heapq.heappush(max_heap,-10)
+# heapq.heappush(max_heap,-1)
+
+# largest=-heapq.heappop(max_heap)
+# print("max heap",largest)
+
+#kth smallest elenment in heap
+#[7,10,4,3,20,15] output 3
+
+# arr=[7,10,4,3,20,15]
+# heapq.heapify(arr)
+# print(arr)
+
+# k = 3
+# smallest = None
+# for _ in range(k):
+#     if arr:
+#         smallest = heapq.heappop(arr)
+#     else:
+#         smallest = None
+#         break
+
+# print(f"{k}th smallest element:", smallest)
+
+#kth largest element in heap
+#[7,10,4,3,20,15], k=1 output =20 k=1
+
+#kth smallest elenment in heap
+#[7,10,4,3,20,15] output 3
+
+# arr=[7,10,4,3,20,15]
+# heapq.heapify(arr)
+# print(arr)
+
+# smallest=heapq.heappop(arr)
+# print(smallest)
+
+
+def bfs_of_graph(graph,start):
+  visited=set()
+  queue=deque()
+  queue=deque([start])
+  visited.add(start)
+  while queue:
+    node=queue.popleft()
+    print("node->",node)
+    for neighbor in graph[node]:
+      if neighbor not in visited:
+        visited.add(neighbor)
+        queue.append(neighbor)
+
+
+#count the no of nodes
+
+graph={
+    0: [1,2],
+    1: [0],
+    2: [0],
+    3: []
+}
+print("nodes in graph",len(graph))
+bfs_of_graph(graph,1)
+
+#count the number of edges
+def count_edges(graph):
+  count=0
+  for node in graph:
+    count+=len(graph[node])
+  return count//2
+
+print(count_edges(graph))
+
+#1.count the no of graph
+#2.no of edge in undirected graph
+#3.find all the neighbours of node [params:graph,node]
+#4.check if two nodes are connected with each othe or not[params:graph,node1,node 2]
+#5.find nodes with no neighbours [params:graph] isolated node
+#6.given a graph and two nodes(strt node,end node) check if a path exist from stat to end //bfs
+
+#4
+def connected(graph,node1,node2):
+  return node2 in graph[node1]
+print(connected(graph,0,2))
+
+#5
+def isolated_nodes(graph):
+  isolated=[]
+  for node in graph:
+    if not graph[node]:
+      isolated.append(node)
+  return isolated
+print(isolated_nodes(graph))
+
+#6
+def check_path(graph,start,end):
+  visited=set()
+  queue=deque()
+  queue=deque([start])
+  visited.add(start)
+  while queue:
+    node=queue.popleft()
+    if node == end:
+      return True
+    for neighbor in graph[node]:
+      if neighbor not in visited:
+        visited.add(neighbor)
+        queue.append(neighbor)
+  return False
+
+check_path(graph,0,2)
+
+
+
+
+
+
+
+
+
+
+
